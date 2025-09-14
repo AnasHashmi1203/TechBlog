@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Blogs</title>
+  <style>
+    body {background:#121212;color:#fff;font-family:Arial,sans-serif;margin:0;}
+    nav {display:flex;justify-content:space-between;align-items:center;background:#1f1f1f;padding:15px 50px;}
+    nav .logo {font-size:24px;font-weight:bold;color:#00adb5;}
+    nav ul {list-style:none;display:flex;gap:20px;margin:0;padding:0;}
+    nav ul li a {text-decoration:none;color:#fff;transition:0.3s;}
+    nav ul li a:hover {color:#00adb5;}
+    .blogs {display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px;}
+    .blog {background:#1e1e1e;padding:20px;border-radius:10px;cursor:pointer;transition:0.3s;}
+    .blog:hover {background:#00adb5;transform:scale(1.05);color:#000;}
+    .modal {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
+    .modal-content {background:#1f1f1f;padding:30px;border-radius:10px;max-width:800px;max-height:80vh;overflow-y:auto;animation:fadeIn 0.5s ease;}
+    .modal-content h2 {color:#00adb5;margin-bottom:15px;}
+    .modal-content p {color:#ccc;line-height:1.6;text-align:justify;}
+    .close {position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer;}
+    @keyframes fadeIn {from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">MyWebsite</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="home.html">Blogs</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Blogs -->
+  <div class="blogs">
+    <div class="blog" onclick="openModal(1)"><h3>🚀 AI ka Future</h3><p>AI duniya ko badal rahi hai...</p></div>
+    <div class="blog" onclick="openModal(2)"><h3>💻 Web Development</h3><p>Modern websites ki power...</p></div>
+    <div class="blog" onclick="openModal(3)"><h3>📱 Mobile Apps</h3><p>Apps ne life easy bana di...</p></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <script>
+    const blogDetails = {
+      1: {
+        title:"🚀 AI ka Future",
+        text:`Artificial Intelligence (AI) aik aisi technology hai jo insani zindagi ke har
+        pehlu ko badal rahi hai. Aaj se kuch saal pehle AI sirf research labs tak limited thi,
+        lekin ab ye har ghar, office aur mobile phone ka hissa ban chuki hai. AI ki madad se
+        doctors diseases ko early detect kar lete hain, students apni learning ko personalize
+        karte hain aur industries apna kaam fast aur efficient bana rahi hain. Future me self
+        driving cars, AI assistants aur smart cities aam ho jayengi. Lekin AI ke challenges
+        bhi hain, jaise job loss aur data privacy ke maslay. Agar insaan isko responsible
+        tareeqe se use kare to AI insaniyat ke liye ek blessing sabit hogi.`
+      },
+      2: {
+        title:"💻 Web Development",
+        text:`Web development digital duniya ki backbone hai. Har business, har service aur har
+        organization ke liye ek website hona ab zaroori ho chuka hai. Modern web development
+        me HTML, CSS aur JavaScript ke sath frameworks jaise React, Angular aur Vue use kiye
+        jate hain jo websites ko fast aur interactive banate hain. Back-end me Node.js, PHP
+        aur Python ka role bohot bara hai. Aaj kal responsive design aur mobile-first approach
+        sabse important hai kyunki users zyada tar mobile se browse karte hain. Future me AI
+        aur automation web development ko aur zyada powerful bana denge.`
+      },
+      3: {
+        title:"📱 Mobile Apps",
+        text:`Mobile apps ne insani zindagi ko simplify kar diya hai. Har kaam ke liye ek app
+        mojood hai: shopping, banking, education, entertainment aur communication sab apps
+        ke zariye hota hai. Android aur iOS dono hi platforms developers ko endless
+        opportunities dete hain. Aaj kal hybrid apps jaise Flutter aur React Native use karke
+        ek hi code base se multi-platform apps banai jati hain. Future me Augmented Reality,
+        Virtual Reality aur AI based apps aur zyada popular hongi. Apps ne sirf life easy
+        nahi banayi balki naye business models aur income sources bhi create kiye hain.`
+      }
+    };
+
+    function openModal(id){
+      document.getElementById("modalTitle").innerText = blogDetails[id].title;
+      document.getElementById("modalText").innerText = blogDetails[id].text;
+      document.getElementById("myModal").style.display="flex";
+    }
+    function closeModal(){
+      document.getElementById("myModal").style.display="none";
+    }
+  </script>
+</body>
+</html>

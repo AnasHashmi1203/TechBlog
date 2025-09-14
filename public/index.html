@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started Page</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
+    body {background-color: #121212; color: #fff; line-height: 1.6;}
+    nav {display: flex; justify-content: space-between; align-items: center; background: #1f1f1f; padding: 15px 50px;}
+    nav .logo {font-size: 24px; font-weight: bold; color: #00adb5;}
+    nav ul {list-style: none; display: flex; gap: 20px;}
+    nav ul li a {text-decoration: none; color: #fff; transition: 0.3s;}
+    nav ul li a:hover {color: #00adb5;}
+    .auth-buttons {display: flex; gap: 15px;}
+    .btn {padding: 8px 16px; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s;}
+    .btn-login {background: transparent; border: 1px solid #00adb5; color: #00adb5;}
+    .btn-login:hover {background: #00adb5; color: #fff;}
+    .btn-signup {background: #00adb5; color: #fff;}
+    .btn-signup:hover {background: #007b80;}
+    .hero {height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom right, #1a1a1a, #000);}
+    .hero h1 {font-size: 50px; margin-bottom: 20px; color: #00adb5;}
+    .hero p {font-size: 20px; margin-bottom: 30px; color: #ccc;}
+    .hero .btn-get-started {padding: 12px 30px; border-radius: 25px; background: #00adb5; color: white; font-size: 18px; border: none; cursor: pointer; transition: 0.3s;}
+    .hero .btn-get-started:hover {background: #007b80;}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">MyWebsite</div>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Features</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="auth-buttons">
+      <!-- Login page link -->
+      <a href="login.html" target="_blank"><button class="btn btn-login">Login</button></a>
+      <!-- Signup page link -->
+      <a href="signup.html" target="_blank"><button class="btn btn-signup">Sign Up</button></a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to My Dark Website</h1>
+    <p>Start your journey with us today.</p>
+    <a href="signup.html" target="_blank"><button class="btn-get-started">Get Started</button></a>
+  </section>
+</body>
+</html>

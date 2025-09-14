@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
+    body {background-color: #121212; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh;}
+    .signup-container {background: #1f1f1f; padding: 30px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);}
+    h2 {margin-bottom: 20px; color: #00adb5;}
+    input {width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 8px; outline: none;}
+    input[type="file"] {background: #222; color: #ccc; padding: 5px;}
+    .btn {width: 100%; padding: 12px; background: #00adb5; border: none; border-radius: 8px; color: #fff; font-size: 16px; cursor: pointer; transition: 0.3s;}
+    .btn:hover {background: #007b80;}
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Create Your Account</h2>
+    <!-- ab signup hone ke baad user login.html par redirect hoga -->
+ <form action="/signup" method="POST" enctype="multipart/form-data">
+  <input name="name" required>
+  <input name="username" required>
+  <input name="email" type="email" required>
+  <input name="password" type="password" required>
+  <input name="confirmPassword" type="password" required>
+  <input name="image" type="file" accept="image/*">
+  <button type="submit">Sign Up</button>
+</form>
+
+
+  </div>
+</body>
+</html>

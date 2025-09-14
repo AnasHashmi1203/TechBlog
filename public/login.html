@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
+    body {background-color: #121212; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh;}
+    .login-container {background: #1f1f1f; padding: 30px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);}
+    h2 {margin-bottom: 20px; color: #00adb5;}
+    input {width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 8px; outline: none;}
+    .btn {width: 100%; padding: 12px; background: #00adb5; border: none; border-radius: 8px; color: #fff; font-size: 16px; cursor: pointer; transition: 0.3s;}
+    .btn:hover {background: #007b80;}
+    .extra-links {margin-top: 15px; font-size: 14px;}
+    .extra-links a {color: #00adb5; text-decoration: none;}
+    .extra-links a:hover {text-decoration: underline;}
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+  <form action="/login" method="POST">
+  <input name="username" required>
+  <input name="password" type="password" required>
+  <button type="submit">Login</button>
+</form>
+
+
+    <div class="extra-links">
+      <p>Don't have an account? <a href="signup.html" target="_blank">Sign Up</a></p>
+    </div>
+  </div>
+  
+</body>
+</html>

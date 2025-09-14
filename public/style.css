@@ -1,0 +1,125 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1f1f1f;
+      padding: 15px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      /* cursor: pointer; */
+    }
+
+    nav .logo a {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00adb5;
+      /* cursor: pointer; */
+      text-decoration: none;
+    }
+
+   
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #00adb5;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn-login {
+      background: transparent;
+      border: 1px solid #00adb5;
+      color: #00adb5;
+    }
+
+    .btn-login:hover {
+      background: #00adb5;
+      color: #fff;
+    }
+
+    .btn-signup {
+      background: #00adb5;
+      color: #fff;
+    }
+
+    .btn-signup:hover {
+      background: #007b80;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(to bottom right, #1a1a1a, #000000);
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      color: #00adb5;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #cccccc;
+    }
+
+    .hero .btn-get-started {
+      padding: 12px 30px;
+      border-radius: 25px;
+      background: #00adb5;
+      color: white;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .hero .btn-get-started:hover {
+      background: #007b80;
+    }
