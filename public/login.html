@@ -1,36 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - TechBlog</title>
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
-    body {background-color: #121212; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh;}
-    .login-container {background: #1f1f1f; padding: 30px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);}
-    h2 {margin-bottom: 20px; color: #00adb5;}
-    input {width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 8px; outline: none;}
-    .btn {width: 100%; padding: 12px; background: #00adb5; border: none; border-radius: 8px; color: #fff; font-size: 16px; cursor: pointer; transition: 0.3s;}
-    .btn:hover {background: #007b80;}
-    .extra-links {margin-top: 15px; font-size: 14px;}
-    .extra-links a {color: #00adb5; text-decoration: none;}
-    .extra-links a:hover {text-decoration: underline;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #000428, #004e92);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    input[type="submit"] {
+      background: #36d1dc;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #5b86e5;
+    }
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #ff416c;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="form-container">
     <h2>Login</h2>
-  <form action="/login" method="POST">
-  <input name="username" required>
-  <input name="password" type="password" required>
-  <button type="submit">Login</button>
-</form>
-
-
-    <div class="extra-links">
-      <p>Don't have an account? <a href="signup.html" target="_blank">Sign Up</a></p>
-    </div>
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="submit" value="Login" />
+    </form>
+    <a href="signup.html">Don't have an account? Sign Up</a>
   </div>
-  
 </body>
 </html>

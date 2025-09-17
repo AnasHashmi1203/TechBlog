@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 // static files (public folder)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // <--- blog submit JSON support
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ensure uploads dir exists
@@ -26,14 +27,11 @@ const upload = multer({ storage });
 app.post('/signup', upload.single('image'), (req, res) => {
   const { name, username, email, password, confirmPassword } = req.body;
   const image = req.file ? req.file.filename : '';
-  // simple validation
   if (!name || !username || !email || !password) return res.status(400).send('Missing fields');
 
   const userObj = { name, username, email, password, confirmPassword, image };
-  // append as JSON line
   fs.appendFileSync(path.join(__dirname, 'data.txt'), JSON.stringify(userObj) + '\n', 'utf8');
 
-  // redirect to login page (served from public)
   res.redirect('/login.html');
 });
 
@@ -56,5 +54,21 @@ app.post('/login', (req, res) => {
   res.send('<h3>Login failed</h3><a href="/login.html">Back to Login</a>');
 });
 
+// =========================
+// NEW: submit blog route
+// =========================
+app.post('/submit-blog', (req, res) => {
+  const { title, category, content, img } = req.body;
+
+  if (!title || !category || !content) return res.status(400).send('Missing blog fields');
+
+  const blogObj = { id: Date.now(), title, category, content, img: img || '' };
+  fs.appendFileSync(path.join(__dirname, 'data.txt'), JSON.stringify(blogObj) + '\n', 'utf8');
+
+  res.send({ success: true });
+});
+
+// serve home page
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    

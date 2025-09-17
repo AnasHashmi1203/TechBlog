@@ -1,35 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - TechBlog</title>
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
-    body {background-color: #121212; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh;}
-    .signup-container {background: #1f1f1f; padding: 30px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);}
-    h2 {margin-bottom: 20px; color: #00adb5;}
-    input {width: 100%; padding: 10px; margin: 10px 0; border: none; border-radius: 8px; outline: none;}
-    input[type="file"] {background: #222; color: #ccc; padding: 5px;}
-    .btn {width: 100%; padding: 12px; background: #00adb5; border: none; border-radius: 8px; color: #fff; font-size: 16px; cursor: pointer; transition: 0.3s;}
-    .btn:hover {background: #007b80;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    input[type="submit"] {
+      background: #ff416c;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #ff4b2b;
+    }
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #00c6ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
-  <div class="signup-container">
-    <h2>Create Your Account</h2>
-    <!-- ab signup hone ke baad user login.html par redirect hoga -->
- <form action="/signup" method="POST" enctype="multipart/form-data">
-  <input name="name" required>
-  <input name="username" required>
-  <input name="email" type="email" required>
-  <input name="password" type="password" required>
-  <input name="confirmPassword" type="password" required>
-  <input name="image" type="file" accept="image/*">
-  <button type="submit">Sign Up</button>
-</form>
-
-
+  <div class="form-container">
+    <h2>Sign Up</h2>
+    <form action="/signup" method="POST" enctype="multipart/form-data">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+      <input type="file" name="image" accept="image/*" required />
+      <input type="submit" value="Create Account" />
+    </form>
+    <a href="login.html">Already have an account? Login</a>
   </div>
 </body>
 </html>

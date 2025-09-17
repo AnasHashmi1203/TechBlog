@@ -1,53 +1,286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Started Page</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TechBlog — Get Started</title>
+  <meta name="description" content="Dark themed responsive tech blog demo with signup/login and animated blog details." />
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif;}
-    body {background-color: #121212; color: #fff; line-height: 1.6;}
-    nav {display: flex; justify-content: space-between; align-items: center; background: #1f1f1f; padding: 15px 50px;}
-    nav .logo {font-size: 24px; font-weight: bold; color: #00adb5;}
-    nav ul {list-style: none; display: flex; gap: 20px;}
-    nav ul li a {text-decoration: none; color: #fff; transition: 0.3s;}
-    nav ul li a:hover {color: #00adb5;}
-    .auth-buttons {display: flex; gap: 15px;}
-    .btn {padding: 8px 16px; border: none; border-radius: 20px; cursor: pointer; transition: 0.3s;}
-    .btn-login {background: transparent; border: 1px solid #00adb5; color: #00adb5;}
-    .btn-login:hover {background: #00adb5; color: #fff;}
-    .btn-signup {background: #00adb5; color: #fff;}
-    .btn-signup:hover {background: #007b80;}
-    .hero {height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom right, #1a1a1a, #000);}
-    .hero h1 {font-size: 50px; margin-bottom: 20px; color: #00adb5;}
-    .hero p {font-size: 20px; margin-bottom: 30px; color: #ccc;}
-    .hero .btn-get-started {padding: 12px 30px; border-radius: 25px; background: #00adb5; color: white; font-size: 18px; border: none; cursor: pointer; transition: 0.3s;}
-    .hero .btn-get-started:hover {background: #007b80;}
+    :root{
+      --bg:#0b0f12; --card:#0f1720; --muted:#9aa6b2; --accent:#6ee7b7; --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --glass-3: rgba(0,0,0,0.6);
+      --shadow: 0 8px 24px rgba(2,6,23,0.6);
+      --radius:14px;
+      font-synthesis: none;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#06080a 0%, #081018 60%);color:#e6eef3;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    a{color:var(--accent);text-decoration:none}
+    .container{max-width:1150px;margin:36px auto;padding:24px}
+
+    /* Navbar */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:transparent}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#0f1720, #042f2a);display:grid;place-items:center;font-weight:700;color:var(--accent);box-shadow:var(--shadow)}
+    .brand h1{font-size:18px;margin:0}
+    .menu{display:flex;gap:12px;align-items:center}
+    .btn{padding:10px 14px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);backdrop-filter: blur(6px);cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,#052b23,#064b3b);border:1px solid rgba(110,231,183,0.08);box-shadow:0 6px 18px rgba(6,44,36,0.35)}
+    .btn.ghost{background:transparent}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:26px;align-items:center;margin-top:28px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:18px;box-shadow:var(--shadow);}
+    .hero h2{margin:0 0 10px 0;font-size:28px}
+    .hero p{color:var(--muted);margin:0 0 16px}
+    .cta-row{display:flex;gap:12px}
+
+    /* Blog grid */
+    .blogs{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--glass);transition:transform .28s ease, box-shadow .28s ease;cursor:pointer}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+    .card h3{margin:0 0 8px 0;font-size:16px}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+    .excerpt{color:#d4e6ea;font-size:14px;line-height:1.5}
+
+    /* Footer */
+    footer{margin-top:36px;padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;justify-content:space-between;align-items:center}
+
+    /* modal */
+    .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(3,6,10,0.6), rgba(3,6,10,0.8));backdrop-filter: blur(6px);z-index:1200}
+    .overlay.show{display:flex}
+    .modal{width:min(880px,94%);max-height:86vh;overflow:auto;background:linear-gradient(180deg,#071018,#07131c);border-radius:16px;padding:22px;border:1px solid var(--glass-2);box-shadow:0 30px 80px rgba(2,6,23,0.75);transform:translateY(18px);opacity:0;animation:pop .36s forwards}
+    @keyframes pop{to{transform:none;opacity:1}}
+    .modal h2{margin-top:0}
+    .modal .content{color:#cce6df;line-height:1.8}
+    .close{position:absolute;right:20px;top:16px;background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .blogs{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:640px){
+      .menu .nav-links{display:none}
+      .blogs{grid-template-columns:1fr}
+      .container{padding:12px}
+      .brand h1{font-size:16px}
+      .hero h2{font-size:22px}
+    }
+
+    /* small UI niceties */
+    .search{padding:10px 12px;border-radius:10px;background:var(--glass-3);border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(110,231,183,0.07);color:var(--accent);font-size:13px;margin-left:6px}
+
+    /* subtle floating animation for logo */
+    .logo{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav>
-    <div class="logo">MyWebsite</div>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <div class="auth-buttons">
-      <!-- Login page link -->
-      <a href="login.html" target="_blank"><button class="btn btn-login">Login</button></a>
-      <!-- Signup page link -->
-      <a href="signup.html" target="_blank"><button class="btn btn-signup">Sign Up</button></a>
-    </div>
-  </nav>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">TB</div>
+        <div>
+          <h1>TechBlog</h1>
+          <div style="font-size:12px;color:var(--muted)">Dark · Responsive · Animated</div>
+        </div>
+      </div>
+      <div class="menu">
+        <input class="search" placeholder="Search blogs..." id="search" />
+        <a href="signup.html"><button class="btn ghost"  id="getStarted" >Get Started</button></a>
+       <a href="signup.html"> <button class="btn" id="signupBtn">Sign Up</button></a>
+        <a href="login.html"><button class="btn primary" id="loginBtn">Login</button></a>
+      </div>
+    </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to My Dark Website</h1>
-    <p>Start your journey with us today.</p>
-    <a href="signup.html" target="_blank"><button class="btn-get-started">Get Started</button></a>
-  </section>
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Welcome to TechBlog</h2>
+        <p>Latest tech articles, walkthroughs and practical guides. Dark theme for comfortable reading at night. Responsive layout — opens great on phones, tablets and desktops.</p>
+        <div class="cta-row">
+          <button class="btn primary" id="startNow">Start Reading</button>
+          <button class="btn" id="exploreTop">Explore Top</button>
+        </div>
+      </div>
+
+      <aside style="padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;border:1px solid var(--glass);">
+        <h3 style="margin-top:0">Featured</h3>
+        <div style="font-size:13px;color:var(--muted)">Editor picks & trending posts</div>
+        <div style="margin-top:12px">
+          <div style="display:flex;gap:10px;align-items:center"><div style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></div> AI in 2025 <span class="tag">Trending</span></div>
+          <div style="margin-top:8px;display:flex;gap:10px;align-items:center"><div style="width:10px;height:10px;border-radius:50%;background:#7dd3fc"></div> JavaScript patterns</div>
+        </div>
+      </aside>
+    </section>
+
+    <section>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:28px">
+        <h2 style="margin:0">Latest Posts</h2>
+        <div style="color:var(--muted);font-size:13px">Showing <span id="count">20</span> posts</div>
+      </div>
+
+      <div class="blogs" id="blogs">
+        <!-- JavaScript will render 20 blog cards here -->
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> TechBlog — Crafted with ❤️</div>
+      <div style="color:var(--muted);font-size:13px">Dark theme • Responsive • No tracking</div>
+    </footer>
+  </div>
+
+  <!-- Modal overlay for blog details -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="close" id="closeModal">✕</button>
+      <h2 id="modalTitle">Blog Title</h2>
+      <div class="meta" id="modalMeta">by Admin • Jan 1, 2025</div>
+      <div class="content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Simple Signup/Login Modals (client-side only demo) -->
+  <div class="overlay" id="authOverlay" style="display:none">
+    <div class="modal" style="max-width:520px">
+      <button class="close" id="closeAuth">✕</button>
+      <h2 id="authTitle">Sign Up</h2>
+      <form id="authForm">
+        <div style="display:grid;gap:10px;margin-top:12px">
+          <input name="name" placeholder="Full name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required />
+          <input name="username" placeholder="Username" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required />
+          <input name="email" type="email" placeholder="Email" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+          <input name="password" type="password" placeholder="Password" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" required />
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
+            <button class="btn ghost" type="button" id="cancelAuth">Cancel</button>
+            <button class="btn primary" type="submit">Continue</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Populate year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sample 200-word content (approximately) — reused for all posts
+    const sample200 = `The landscape of technology evolves at a staggering pace, and staying informed requires both curiosity and discipline. This post explores practical ideas that software developers, system architects, and curious readers can use to stay current. We discuss trends such as model-driven development, the increasing role of AI-assisted tooling in everyday tasks, and the importance of focusing on fundamentals like algorithms and system design. Also covered are pragmatic tips: contributing to small open-source projects, writing concise technical notes, and scheduling regular learning time. Finally, we stress maintaining a balance — deep work for difficult problems, and light reading for breadth. By combining consistent practice with smart information filtering, professionals can navigate an ever-changing industry with confidence and creativity.`;
+
+    // Generate 20 posts
+    const posts = Array.from({length:20}).map((_,i)=>({
+      id:i+1,
+      title:`Deep Dive: Modern Tech Topic #${i+1}`,
+      meta:`by TechBot • ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i%12]} ${10+i}`,
+      excerpt:`A quick overview of a trending tech idea. Click to read full details.`,
+      content: sample200
+    }));
+
+    const blogsEl = document.getElementById('blogs');
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+
+    function renderCards(list){
+      blogsEl.innerHTML = '';
+      list.forEach(p=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `<h3>${p.title}</h3><div class='meta'>${p.meta}</div><p class='excerpt'>${p.excerpt}</p>`;
+        card.addEventListener('click',()=>openPost(p));
+        blogsEl.appendChild(card);
+      });
+      document.getElementById('count').textContent = list.length;
+    }
+
+    function openPost(p){
+      modalTitle.textContent = p.title;
+      modalMeta.textContent = p.meta;
+      // add animated paragraph reveal
+      modalContent.innerHTML = '';
+      overlay.classList.add('show');
+      // split into sentences for staged reveal
+      const sentences = p.content.match(/[^\.\!\?]+[\.\!\?]+/g) || [p.content];
+      let idx=0;
+      const step = ()=>{
+        if(idx>=sentences.length) return;
+        const span = document.createElement('p');
+        span.style.opacity=0; span.style.transform='translateY(6px)';
+        span.textContent = sentences[idx].trim();
+        modalContent.appendChild(span);
+        // trigger transition
+        setTimeout(()=>{span.style.transition='all .38s ease';span.style.opacity=1;span.style.transform='none'}, 30);
+        idx++;
+        setTimeout(step, 140);
+      }
+      step();
+    }
+
+    closeModal.addEventListener('click',()=>{overlay.classList.remove('show');modalContent.innerHTML='';});
+    overlay.addEventListener('click',(e)=>{if(e.target===overlay){overlay.classList.remove('show');modalContent.innerHTML='';}});
+
+    // Search
+    document.getElementById('search').addEventListener('input', (e)=>{
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = posts.filter(p=>p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q));
+      renderCards(filtered);
+    });
+
+    // Auth modal logic (client-side demo)
+    const authOverlay = document.getElementById('authOverlay');
+    const authForm = document.getElementById('authForm');
+    const authTitle = document.getElementById('authTitle');
+    const cancelAuth = document.getElementById('cancelAuth');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const getStarted = document.getElementById('getStarted');
+    const startNow = document.getElementById('startNow');
+
+    signupBtn.onclick = ()=>{authTitle.textContent='Sign Up';authForm.dataset.mode='signup';authOverlay.style.display='flex'};
+    loginBtn.onclick = ()=>{authTitle.textContent='Login';authForm.dataset.mode='login';authOverlay.style.display='flex'};
+    getStarted.onclick = ()=>{authTitle.textContent='Sign Up';authForm.dataset.mode='signup';authOverlay.style.display='flex'};
+    startNow.onclick = ()=>{window.scrollTo({top:document.querySelector('.blogs').offsetTop,behavior:'smooth'})};
+
+    cancelAuth.onclick = ()=>{authOverlay.style.display='none'};
+    document.getElementById('closeAuth').addEventListener('click',()=>{authOverlay.style.display='none'});
+
+    authForm.addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const mode = authForm.dataset.mode || 'signup';
+      const formData = new FormData(authForm);
+      // demo behaviour: store in localStorage
+      if(mode==='signup'){
+        const user = {name:formData.get('name'), username:formData.get('username'), email:formData.get('email'), password:formData.get('password')};
+        localStorage.setItem('techblog_user_'+user.username, JSON.stringify(user));
+        alert('Signup complete. Please use Login.');
+        authOverlay.style.display='none';
+      } else {
+        const username = formData.get('username');
+        const password = formData.get('password');
+        const raw = localStorage.getItem('techblog_user_'+username);
+        if(raw){
+          const user = JSON.parse(raw);
+          if(user.password===password){
+            alert('Login success — welcome '+user.name);
+            authOverlay.style.display='none';
+            // simulate redirect to home section with blog
+            document.getElementById('startNow').click();
+          } else alert('Invalid credentials');
+        } else alert('User not found — please sign up');
+      }
+    });
+
+    // initial render
+    renderCards(posts);
+
+    // keyboard: Esc to close
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape'){overlay.classList.remove('show');authOverlay.style.display='none';modalContent.innerHTML='';}});
+  </script>
 </body>
 </html>

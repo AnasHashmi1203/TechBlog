@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Submit Your Blog — TechBlog</title>
+<style>
+:root{
+  --bg:#0b0f12; --panel:#0f1720; --accent:#00c6ff; --muted:#98a0a8; --glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:#e6eef6;display:flex;flex-direction:column;min-height:100vh;}
+nav{width:100%; background: var(--panel); backdrop-filter: blur(6px); display:flex; align-items:center; justify-content:space-between; padding:14px 22px; position:sticky; top:0; z-index:1000;}
+nav .brand h1{margin:0;color:var(--accent)}
+.navlinks{display:flex;gap:18px;align-items:center;position:relative;}
+.navlinks a{color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; transition: all .2s ease; position:relative;}
+.navlinks a:hover{color:#022;background:var(--accent);}
+.hamburger{display:none; flex-direction:column; gap:5px; cursor:pointer;}
+.hamburger div{width:26px;height:3px;background:#dfeefc;border-radius:3px;transition:all .2s;}
+@media(max-width:700px){
+  .navlinks{display:none; flex-direction:column; gap:12px; position:absolute; right:12px; top:60px; background:var(--panel); padding:14px; border-radius:10px;}
+  .navlinks.show-mobile{display:flex;}
+  .hamburger{display:flex;}
+}
+.container{max-width:950px;margin:40px auto;padding:0 12px;}
+form{display:flex;flex-direction:column;gap:16px;background:var(--panel);padding:28px;border-radius:12px;width:90%;margin:0 auto;}
+input,textarea,select{padding:12px;border-radius:8px;border:none;background:var(--glass);color:#fff;font-size:1rem;}
+textarea{resize:vertical;}
+button{padding:14px;border:none;border-radius:8px;background:var(--accent);color:#001;font-weight:700;cursor:pointer;transition:all .2s}
+button:hover{opacity:.9;}
+h2{color:var(--accent);margin-bottom:16px;font-size:1.8rem;text-align:center;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand"><h1>TechBlog</h1></div>
+  <div class="navlinks" id="navlinks">
+    <a href="home.html">Home</a>
+    <a href="#">Categories</a>
+    <a href="#">About Us</a>
+    <a href="#">Profile</a>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+</nav>
+
+<section class="container">
+  <h2>Submit Your Blog</h2>
+  <form id="blogForm">
+    <input type="text" id="bTitle" placeholder="Blog Title" required>
+    <select id="bCategory" required>
+      <option value="">Select Category</option>
+      <option value="AI">AI</option>
+      <option value="Cloud">Cloud</option>
+      <option value="Edge">Edge</option>
+      <option value="Cybersecurity">Cybersecurity</option>
+      <option value="DevOps">DevOps</option>
+      <option value="Web">Web</option>
+      <option value="ML">ML</option>
+      <option value="Quantum">Quantum</option>
+      <option value="Blockchain">Blockchain</option>
+    </select>
+    <textarea id="bContent" rows="6" placeholder="Write your blog content..." required></textarea>
+    <input type="text" id="bImage" placeholder="Image URL (optional)">
+    <button type="submit">Submit Blog</button>
+  </form>
+</section>
+
+<script>
+function toggleMenu(){
+  document.getElementById('navlinks').classList.toggle('show-mobile');
+}
+
+// Frontend-only blog list
+const blogList=[];
+document.getElementById('blogForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const title=document.getElementById('bTitle').value;
+  const category=document.getElementById('bCategory').value;
+  const content=document.getElementById('bContent').value;
+  const img=document.getElementById('bImage').value || "https://picsum.photos/400/250?random=" + Math.floor(Math.random()*1000);
+  const newBlog={id:blogList.length+1,title,category,img,text:content};
+  blogList.push(newBlog);
+  alert("Your blog has been added! You can see it on the home page.");
+  this.reset();
+});
+</script>
+</body>
+</html>

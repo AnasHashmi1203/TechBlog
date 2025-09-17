@@ -1,98 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tech Blogs</title>
-  <style>
-    body {background:#121212;color:#fff;font-family:Arial,sans-serif;margin:0;}
-    nav {display:flex;justify-content:space-between;align-items:center;background:#1f1f1f;padding:15px 50px;}
-    nav .logo {font-size:24px;font-weight:bold;color:#00adb5;}
-    nav ul {list-style:none;display:flex;gap:20px;margin:0;padding:0;}
-    nav ul li a {text-decoration:none;color:#fff;transition:0.3s;}
-    nav ul li a:hover {color:#00adb5;}
-    .blogs {display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px;}
-    .blog {background:#1e1e1e;padding:20px;border-radius:10px;cursor:pointer;transition:0.3s;}
-    .blog:hover {background:#00adb5;transform:scale(1.05);color:#000;}
-    .modal {display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
-    .modal-content {background:#1f1f1f;padding:30px;border-radius:10px;max-width:800px;max-height:80vh;overflow-y:auto;animation:fadeIn 0.5s ease;}
-    .modal-content h2 {color:#00adb5;margin-bottom:15px;}
-    .modal-content p {color:#ccc;line-height:1.6;text-align:justify;}
-    .close {position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer;}
-    @keyframes fadeIn {from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechBlog — Home</title>
+<style>
+:root{
+  --bg:#0b0f12;
+  --panel:#0f1720;
+  --accent:#00c6ff;
+  --muted:#98a0a8;
+  --glass: rgba(255,255,255,0.04);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter, sans-serif;background:var(--bg);color:#e6eef6;display:flex;flex-direction:column;min-height:100vh;}
+
+/* NAVBAR */
+nav{
+  width:100%; background: var(--panel);
+  backdrop-filter: blur(6px); display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; position:sticky; top:0; z-index:1000;
+}
+nav .brand h1{margin:0;color:var(--accent)}
+.navlinks{display:flex;gap:18px;align-items:center;position:relative}
+.navlinks a{
+  color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:8px;
+  font-weight:600; transition: all .2s ease; position:relative;
+}
+.navlinks a:hover{color:#022;background:var(--accent);}
+
+.navlinks .dropdown{
+  position:relative;
+}
+.navlinks .dropdown-content{
+  position:absolute; top:38px; left:0; background:var(--panel); border-radius:10px;
+  overflow:hidden; display:none; flex-direction:column; min-width:150px; 
+  box-shadow:0 12px 30px rgba(0,0,0,0.5); opacity:0; transform:translateY(-10px); transition:all .3s ease;
+}
+.navlinks .dropdown-content a{
+  padding:10px 14px; color:var(--muted); font-weight:500;
+}
+.navlinks .dropdown-content a:hover{background:var(--accent); color:#001;}
+/* show dropdown on hover for desktop */
+@media (min-width:701px){
+  .navlinks .dropdown:hover .dropdown-content{
+    display:flex; opacity:1; transform:translateY(0);
+  }
+}
+
+/* hamburger for mobile */
+.hamburger{display:none; flex-direction:column; gap:5px; cursor:pointer}
+.hamburger div{width:26px;height:3px;background:#dfeefc;border-radius:3px;transition:all .2s}
+@media(max-width:700px){
+  .navlinks{display:none; flex-direction:column; gap:12px; position:absolute; right:12px; top:60px; background:var(--panel); padding:14px; border-radius:10px;}
+  .navlinks.show-mobile{display:flex;}
+  .hamburger{display:flex}
+}
+
+/* GRID */
+.container{max-width:1200px;margin:20px auto;padding:0 12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+/* card */
+.card{background:var(--glass); border-radius:12px; cursor:pointer; display:flex; flex-direction:column; transition: transform .2s, box-shadow .2s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,10,0.6);}
+.card .thumb{height:160px;background-size:cover;background-position:center;}
+.card .meta{padding:14px; flex:1; display:flex; flex-direction:column; gap:6px;}
+.card h3{margin:0;color:#eaf6ff;font-size:1.05rem;}
+.card p{margin:0;color:var(--muted);font-size:0.95rem;line-height:1.4;}
+.card .tag{display:inline-block;margin-top:auto;padding:5px 10px;border-radius:999px;background:rgba(0,198,255,0.06);color:var(--accent);font-weight:700;font-size:0.82rem}
+
+/* modal same as before */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,10,0.72);z-index:2000;padding:20px;}
+.modal.show{display:flex;}
+.modal-box{width:100%;max-width:880px;background:linear-gradient(180deg,#061018,#09141b);border-radius:12px;padding:22px;border:1px solid rgba(255,255,255,0.04);color:#e6eef6;max-height:86vh;overflow:auto;box-shadow:0 30px 60px rgba(2,6,10,0.7);transform:translateY(10px);animation:pop .28s ease;}
+.modal-box h2{margin:0 0 8px;color:var(--accent)}
+.modal-box p{color:var(--muted);line-height:1.6}
+.modal-close{float:right;background:transparent;border:none;color:var(--muted);font-size:26px;cursor:pointer}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+</style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav>
-    <div class="logo">MyWebsite</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="home.html">Blogs</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Blogs -->
-  <div class="blogs">
-    <div class="blog" onclick="openModal(1)"><h3>🚀 AI ka Future</h3><p>AI duniya ko badal rahi hai...</p></div>
-    <div class="blog" onclick="openModal(2)"><h3>💻 Web Development</h3><p>Modern websites ki power...</p></div>
-    <div class="blog" onclick="openModal(3)"><h3>📱 Mobile Apps</h3><p>Apps ne life easy bana di...</p></div>
+<nav>
+  <div class="brand">
+    <h1>TechBlog</h1>
   </div>
-
-  <!-- Modal -->
-  <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
-      <h2 id="modalTitle"></h2>
-      <p id="modalText"></p>
+  <div class="navlinks" id="navlinks">
+    <a href="#">Home</a>
+    <div class="dropdown">
+      <a href="#">Categories ▾</a>
+      <div class="dropdown-content" id="category-list">
+        <!-- categories populated by JS -->
+      </div>
     </div>
+    <a href="#">About Us</a>
+    <a href="submit.html">Create Blog</a>
+    
+    <a href="#">Profile</a>
   </div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+</nav>
 
-  <script>
-    const blogDetails = {
-      1: {
-        title:"🚀 AI ka Future",
-        text:`Artificial Intelligence (AI) aik aisi technology hai jo insani zindagi ke har
-        pehlu ko badal rahi hai. Aaj se kuch saal pehle AI sirf research labs tak limited thi,
-        lekin ab ye har ghar, office aur mobile phone ka hissa ban chuki hai. AI ki madad se
-        doctors diseases ko early detect kar lete hain, students apni learning ko personalize
-        karte hain aur industries apna kaam fast aur efficient bana rahi hain. Future me self
-        driving cars, AI assistants aur smart cities aam ho jayengi. Lekin AI ke challenges
-        bhi hain, jaise job loss aur data privacy ke maslay. Agar insaan isko responsible
-        tareeqe se use kare to AI insaniyat ke liye ek blessing sabit hogi.`
-      },
-      2: {
-        title:"💻 Web Development",
-        text:`Web development digital duniya ki backbone hai. Har business, har service aur har
-        organization ke liye ek website hona ab zaroori ho chuka hai. Modern web development
-        me HTML, CSS aur JavaScript ke sath frameworks jaise React, Angular aur Vue use kiye
-        jate hain jo websites ko fast aur interactive banate hain. Back-end me Node.js, PHP
-        aur Python ka role bohot bara hai. Aaj kal responsive design aur mobile-first approach
-        sabse important hai kyunki users zyada tar mobile se browse karte hain. Future me AI
-        aur automation web development ko aur zyada powerful bana denge.`
-      },
-      3: {
-        title:"📱 Mobile Apps",
-        text:`Mobile apps ne insani zindagi ko simplify kar diya hai. Har kaam ke liye ek app
-        mojood hai: shopping, banking, education, entertainment aur communication sab apps
-        ke zariye hota hai. Android aur iOS dono hi platforms developers ko endless
-        opportunities dete hain. Aaj kal hybrid apps jaise Flutter aur React Native use karke
-        ek hi code base se multi-platform apps banai jati hain. Future me Augmented Reality,
-        Virtual Reality aur AI based apps aur zyada popular hongi. Apps ne sirf life easy
-        nahi banayi balki naye business models aur income sources bhi create kiye hain.`
-      }
-    };
+<main>
+  <section class="container">
+    <div class="grid" id="grid">
+      <!-- Blog cards generated by JS -->
+    </div>
+  </section>
+</main>
 
-    function openModal(id){
-      document.getElementById("modalTitle").innerText = blogDetails[id].title;
-      document.getElementById("modalText").innerText = blogDetails[id].text;
-      document.getElementById("myModal").style.display="flex";
-    }
-    function closeModal(){
-      document.getElementById("myModal").style.display="none";
-    }
-  </script>
+<!-- Modal -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2 id="modal-title">Title</h2>
+    <p id="modal-body">Content</p>
+  </div>
+</div>
+
+<script>
+const categories=["AI","Cloud","Edge","Cybersecurity","DevOps","Web","ML","Quantum","Blockchain"];
+const blogList=[
+  {id:1,title:"AI in 2025",category:"AI",img:"https://picsum.photos/id/1011/400/250",text:"Artificial Intelligence is reshaping industries worldwide. By 2025, AI will become more sophisticated, automating complex tasks and assisting humans in decision-making. Companies are leveraging AI for predictive analytics, personalized recommendations, and smarter operations. Ethical considerations and data privacy remain critical as AI adoption increases. This blog explores the future possibilities of AI applications across healthcare, finance, education, and transportation. It also addresses challenges like bias in algorithms, transparency, and the need for continuous learning to keep AI aligned with human values."},
+  {id:2,title:"Cloud Computing Trends",category:"Cloud",img:"https://picsum.photos/id/1012/400/250",text:"Cloud computing continues to evolve with hybrid and multi-cloud strategies gaining momentum. Businesses are focusing on scalability, cost efficiency, and global access to data and applications. Emerging trends include serverless computing, edge integration, and AI-powered cloud services. Security and compliance remain top priorities. This blog discusses how cloud platforms are transforming IT infrastructure, enabling faster deployments, better collaboration, and disaster recovery solutions."},
+  {id:3,title:"Edge Computing Explained",category:"Edge",img:"https://picsum.photos/id/1013/400/250",text:"Edge computing brings computation closer to the data source, reducing latency and bandwidth use. IoT devices, autonomous vehicles, and smart cities benefit from processing data at the edge. This blog explores the advantages, including faster response times, improved reliability, and lower cloud dependency. It also covers edge security challenges and future developments."},
+  {id:4,title:"Cybersecurity Essentials",category:"Cybersecurity",img:"https://picsum.photos/id/1014/400/250",text:"With cyber attacks on the rise, understanding cybersecurity essentials is vital for individuals and organizations. This blog covers common threats like phishing, ransomware, and insider risks, and outlines best practices including multi-factor authentication, encryption, and regular updates. It emphasizes proactive defense and continuous monitoring to safeguard digital assets."},
+  {id:5,title:"DevOps Best Practices",category:"DevOps",img:"https://picsum.photos/id/1015/400/250",text:"DevOps bridges the gap between development and operations, promoting collaboration and faster delivery. Best practices include continuous integration, continuous delivery, automated testing, and infrastructure as code. This blog dives into effective DevOps pipelines, cultural shifts, and tools that enhance efficiency while maintaining high-quality software."},
+  {id:6,title:"Modern Web Development",category:"Web",img:"https://picsum.photos/id/1016/400/250",text:"Modern web development focuses on responsive, performant, and interactive websites. Frontend frameworks like React, Vue, and Angular dominate, while backend APIs provide dynamic content. This blog covers trends like server-side rendering, progressive web apps, and headless CMS approaches to create engaging user experiences."},
+  {id:7,title:"Machine Learning Basics",category:"ML",img:"https://picsum.photos/id/1017/400/250",text:"Machine Learning allows computers to learn from data without explicit programming. This blog introduces supervised, unsupervised, and reinforcement learning techniques. It explains real-world applications such as recommendation systems, fraud detection, and predictive analytics, and emphasizes the importance of data quality and model evaluation."},
+  {id:8,title:"Quantum Computing Overview",category:"Quantum",img:"https://picsum.photos/id/1018/400/250",text:"Quantum computing leverages quantum bits to perform calculations far faster than classical computers. This blog explores quantum principles, potential applications in cryptography, optimization, and scientific simulations, and the challenges in building stable and scalable quantum machines."},
+  {id:9,title:"Blockchain Beyond Bitcoin",category:"Blockchain",img:"https://picsum.photos/id/1019/400/250",text:"Blockchain technology underpins cryptocurrencies but extends far beyond. This blog explains decentralized ledgers, smart contracts, and their applications in finance, supply chain, and identity management. It also discusses scalability, energy efficiency, and adoption challenges."},
+  {id:10,title:"AI Ethics",category:"AI",img:"https://picsum.photos/id/1020/400/250",text:"As AI systems become pervasive, ethical considerations gain importance. This blog discusses fairness, accountability, transparency, and privacy in AI implementations. Organizations must develop guidelines to ensure AI benefits humanity without introducing harm or bias."},
+  {id:11,title:"Cloud Security Tips",category:"Cloud",img:"https://picsum.photos/id/1021/400/250",text:"Securing cloud environments is critical for modern enterprises. This blog covers identity management, encryption, compliance standards, and monitoring strategies. It emphasizes shared responsibility and continuous assessment to mitigate risks."},
+  {id:12,title:"Edge vs Cloud",category:"Edge",img:"https://picsum.photos/id/1022/400/250",text:"Comparing edge and cloud computing helps determine optimal infrastructure strategies. This blog discusses latency, cost, security, and workload suitability. It provides guidance on hybrid solutions combining edge processing with cloud storage."},
+  {id:13,title:"Top Cybersecurity Tools",category:"Cybersecurity",img:"https://picsum.photos/id/1023/400/250",text:"Effective cybersecurity relies on the right tools. This blog highlights firewalls, intrusion detection systems, antivirus software, and SIEM solutions. It explains how to integrate these tools into a comprehensive security strategy."},
+  {id:14,title:"CI/CD in DevOps",category:"DevOps",img:"https://picsum.photos/id/1024/400/250",text:"Continuous Integration and Continuous Deployment streamline software delivery. This blog details pipelines, automation scripts, testing frameworks, and deployment strategies to ensure reliable and fast releases."},
+  {id:15,title:"Responsive Web Design",category:"Web",img:"https://picsum.photos/id/1025/400/250",text:"Responsive web design ensures websites look and function well on all devices. This blog covers CSS grid, flexbox, media queries, and design principles to create adaptive layouts for desktop, tablet, and mobile."},
+  {id:16,title:"ML Model Deployment",category:"ML",img:"https://picsum.photos/id/1026/400/250",text:"Deploying machine learning models requires robust infrastructure and monitoring. This blog explains containerization, APIs, cloud deployment, and best practices to keep ML models reliable and performant."},
+  {id:17,title:"Quantum Algorithms",category:"Quantum",img:"https://picsum.photos/id/1027/400/250",text:"Quantum algorithms, like Shor's and Grover's, promise exponential speedup for certain problems. This blog introduces basic quantum algorithm concepts, potential applications, and implementation challenges."},
+  {id:18,title:"Blockchain Use Cases",category:"Blockchain",img:"https://picsum.photos/id/1028/400/250",text:"Beyond cryptocurrencies, blockchain enables supply chain tracking, decentralized identity, and secure voting systems. This blog explains practical use cases and adoption considerations."},
+  {id:19,title:"AI in Healthcare",category:"AI",img:"https://picsum.photos/id/1029/400/250",text:"AI is revolutionizing healthcare through predictive diagnostics, personalized treatment, and administrative automation. This blog explores real-world applications, benefits, and ethical considerations in medical AI."},
+  {id:20,title:"Web 3.0 Concepts",category:"Web",img:"https://picsum.photos/id/1030/400/250",text:"Web 3.0 emphasizes decentralization, user ownership of data, and blockchain integration. This blog explains its potential impact on the internet ecosystem and how developers can prepare for the next generation of web technologies."},
+];
+
+
+// generate category list
+const categoryListDiv=document.getElementById('category-list');
+categories.forEach(cat=>{
+  const a=document.createElement('a');
+  a.href="#"; a.innerText=cat;
+  a.addEventListener('click',()=>filterCategory(cat));
+  categoryListDiv.appendChild(a);
+});
+
+// generate all blogs in grid
+const grid=document.getElementById('grid');
+function renderBlogs(list){
+  grid.innerHTML='';
+  list.forEach(blog=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`<div class="thumb" style="background-image:url('${blog.img}')"></div>
+      <div class="meta"><h3>${blog.title}</h3><p>${shorten(blog.text,120)}</p>
+      <div class="tag">${blog.category}</div></div>`;
+    card.addEventListener('click',()=>openModal(blog.id));
+    grid.appendChild(card);
+  });
+}
+renderBlogs(blogList);
+
+function filterCategory(cat){
+  const filtered=blogList.filter(b=>b.category===cat);
+  renderBlogs(filtered);
+}
+
+// modal
+function openModal(id){
+  const blog=blogList.find(b=>b.id===id);
+  if(!blog) return;
+  document.getElementById('modal-title').innerText=blog.title;
+  document.getElementById('modal-body').innerText=blog.text;
+  document.getElementById('modal').classList.add('show'); document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e && e.target && e.target.id!=='modal' && !e.target.closest('.modal-box')) return;
+  document.getElementById('modal').classList.remove('show'); document.body.style.overflow='';
+}
+
+// hamburger mobile
+function toggleMenu(){
+  const nav=document.getElementById('navlinks');
+  nav.classList.toggle('show-mobile');
+}
+
+// helpers
+function shorten(t,m){return t.length<=m?t:t.slice(0,m-1)+'…'}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
+</script>
+
 </body>
 </html>
